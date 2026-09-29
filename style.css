@@ -333,14 +333,22 @@ html, body {
 
 .video-container {
   width: 100%;
-  max-width: 400px;
   margin: 0 auto;
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: var(--bg-card);
+  background: #000;
   border: 1px solid var(--border-color);
-  aspect-ratio: 9/16;
-  min-height: 500px;
+  position: relative;
+  height: 70vh;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 .video-text {
