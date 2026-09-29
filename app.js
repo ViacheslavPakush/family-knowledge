@@ -12,10 +12,10 @@ const STATE = {
 const CHILDREN = [
   {
     id: 1,
-    name: 'Донечка',
+    name: 'KAMILA',
     emoji: '👧',
     gender: 'girl',
-    birthYear: 2015,
+    birthYear: 2017,
     level: 3,
     passwords: {
       2: 'СОНЕЧКО',
@@ -26,10 +26,10 @@ const CHILDREN = [
   },
   {
     id: 2,
-    name: 'Синочок',
+    name: 'MAKS',
     emoji: '👦',
     gender: 'boy',
-    birthYear: 2011,
+    birthYear: 2013,
     level: 4,
     passwords: {
       2: 'ОРЕЛ',
