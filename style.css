@@ -335,7 +335,7 @@ html, body {
 
 .video-container {
   width: 100%;
-  flex: 1;
+  height: calc(100vh - 60px);
   position: relative;
   background: #000;
   overflow: hidden;
@@ -349,7 +349,6 @@ html, body {
   height: 100%;
   border: none;
 }
-
 .video-text {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
