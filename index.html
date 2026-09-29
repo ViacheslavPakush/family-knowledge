@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Knowledge 🔐</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ========== ГОЛОВНИЙ ЕКРАН ========== -->
+  <div id="screen-home" class="screen active">
+    <div class="home-wrapper">
+
+      <div class="logo-area">
+        <div class="logo-icon">🔐</div>
+        <h1 class="logo-title">СІМЕЙНІ ЗНАННЯ</h1>
+        <p class="logo-sub">Від тата — для вас</p>
+      </div>
+
+      <div class="profiles-title">Хто ти?</div>
+
+      <div class="profiles-list" id="profiles-list">
+        <!-- Профілі додаються через app.js -->
+      </div>
+
+      <button class="btn-admin" onclick="showAdminLogin()">
+        🔑 Адмін
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ========== ЕКРАН КАТЕГОРІЙ ========== -->
+  <div id="screen-categories" class="screen">
+    <div class="top-bar">
+      <button class="btn-back" onclick="showScreen('screen-home')">←</button>
+      <h2 id="categories-title">Категорії</h2>
+      <div class="top-bar-right" id="child-level-badge"></div>
+    </div>
+    <div class="categories-list" id="categories-list">
+    </div>
+  </div>
+
+  <!-- ========== ЕКРАН ПИТАНЬ ========== -->
+  <div id="screen-questions" class="screen">
+    <div class="top-bar">
+      <button class="btn-back" onclick="showScreen('screen-categories')">←</button>
+      <h2 id="questions-title">Питання</h2>
+    </div>
+    <div class="questions-list" id="questions-list">
+    </div>
+  </div>
+
+  <!-- ========== ЕКРАН ВІДЕО ========== -->
+  <div id="screen-video" class="screen">
+    <div class="top-bar">
+      <button class="btn-back" onclick="showScreen('screen-questions')">←</button>
+      <h2 id="video-title">Відповідь</h2>
+    </div>
+    <div class="video-wrapper">
+      <div id="video-container"></div>
+      <p id="video-text" class="video-text"></p>
+    </div>
+  </div>
+
+  <!-- ========== АДМІН ЛОГІН ========== -->
+  <div id="screen-admin-login" class="screen">
+    <div class="admin-login-wrapper">
+      <div class="logo-icon">🔑</div>
+      <h2>Адмін панель</h2>
+      <input 
+        type="password" 
+        id="admin-password-input"
+        class="admin-input"
+        placeholder="Введи пароль"
+      />
+      <button class="btn-primary" onclick="checkAdminPassword()">
+        УВІЙТИ
+      </button>
+      <button class="btn-back-text" onclick="showScreen('screen-home')">
+        ← Назад
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== АДМІН ПАНЕЛЬ ========== -->
+  <div id="screen-admin" class="screen">
+    <div class="top-bar">
+      <button class="btn-back" onclick="showScreen('screen-home')">←</button>
+      <h2>Адмін панель</h2>
+    </div>
+    <div class="admin-wrapper">
+
+      <div class="admin-section">
+        <h3>📋 Питання без відео</h3>
+        <div id="admin-empty-questions" class="admin-list">
+        </div>
+      </div>
+
+      <div class="admin-section">
+        <h3>➕ Додати питання</h3>
+        <input 
+          type="text" 
+          id="new-question-text"
+          class="admin-input"
+          placeholder="Текст питання"
+        />
+        <select id="new-question-category" class="admin-select">
+        </select>
+        <select id="new-question-gender" class="admin-select">
+          <option value="both">👧👦 Для всіх</option>
+          <option value="girl">👧 Тільки дівчинці</option>
+          <option value="boy">👦 Тільки хлопцю</option>
+        </select>
+        <button class="btn-primary" onclick="addQuestion()">
+          ➕ Додати
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
