@@ -94,9 +94,7 @@ const QUESTIONS = [
   { id: 58, categoryId: 10, gender: 'boy', minLevel: 3, question: 'Що таке честь чоловіка?',         videos: {}, text: '' },
   { id: 59, categoryId: 10, gender: 'boy', minLevel: 2, question: 'Як бути сильним не тільки тілом?',videos: {}, text: '' },
   { id: 60, categoryId: 10, gender: 'boy', minLevel: 3, question: 'Що значить захищати сім\'ю?',     videos: {}, text: '' },
-   { id: 61, categoryId: 1, gender: 'both', minLevel: 1, question: 'TEST', videos: { 
-    1: 'https://drive.google.com/file/d/1CxthuEzkrrTI-g5nAdU5b5u-jJJN-7nm/preview'
-  }, 
+  { id: 61, categoryId: 1, gender: 'both', minLevel: 1, question: 'TEST', videos: { 1: 'https://drive.google.com/file/d/1CxthuEzkrrTI-g5nAdU5b5u-jJJN-7nm/preview' }, text: '' },
   text: '',
 },
 ];
