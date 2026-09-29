@@ -27,12 +27,51 @@ const CHILDREN = [
   },
 ];
 
+// ── Зберегти в localStorage ────────────────
+function saveToStorage() {
+  const extra = QUESTIONS.filter(q => q.id > 61);
+  localStorage.setItem('fk_questions', JSON.stringify(extra));
+
+  const videos = {};
+  QUESTIONS.forEach(q => {
+    if (q.videos && Object.keys(q.videos).length > 0) {
+      videos[q.id] = q.videos;
+    }
+  });
+  localStorage.setItem('fk_videos', JSON.stringify(videos));
+}
+
+// ── Завантажити з localStorage ─────────────
+function loadFromStorage() {
+  const savedVideos = localStorage.getItem('fk_videos');
+  if (savedVideos) {
+    const videos = JSON.parse(savedVideos);
+    QUESTIONS.forEach(q => {
+      if (videos[q.id]) {
+        q.videos = videos[q.id];
+      }
+    });
+  }
+
+  const savedQuestions = localStorage.getItem('fk_questions');
+  if (savedQuestions) {
+    const extra = JSON.parse(savedQuestions);
+    extra.forEach(q => {
+      if (!QUESTIONS.find(existing => existing.id === q.id)) {
+        QUESTIONS.push(q);
+      }
+    });
+  }
+}
+
+// ── Показати екран ─────────────────────────
 function showScreen(id) {
   document.querySelectorAll('.screen')
     .forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
+// ── Профілі ────────────────────────────────
 function renderProfiles() {
   const list = document.getElementById('profiles-list');
   if (!list) return;
@@ -55,6 +94,7 @@ function renderProfiles() {
   });
 }
 
+// ── Вибір дитини ───────────────────────────
 function selectChild(child) {
   STATE.currentChild = child;
 
@@ -68,6 +108,7 @@ function selectChild(child) {
   showScreen('screen-categories');
 }
 
+// ── Категорії ──────────────────────────────
 function renderCategories(child) {
   const list = document.getElementById('categories-list');
   if (!list) return;
@@ -106,6 +147,7 @@ function renderCategories(child) {
   });
 }
 
+// ── Вибір категорії ────────────────────────
 function selectCategory(cat) {
   STATE.currentCategory = cat;
 
@@ -116,6 +158,7 @@ function selectCategory(cat) {
   showScreen('screen-questions');
 }
 
+// ── Питання ────────────────────────────────
 function renderQuestions(cat) {
   const list = document.getElementById('questions-list');
   const child = STATE.currentChild;
@@ -142,6 +185,7 @@ function renderQuestions(cat) {
   });
 }
 
+// ── Вибір питання ──────────────────────────
 function selectQuestion(q) {
   STATE.currentQuestion = q;
 
@@ -168,7 +212,8 @@ function selectQuestion(q) {
         allow="accelerometer; autoplay; clipboard-write; 
                encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
-        style="width:100%;height:100%;border:none;border-radius:14px"
+        style="width:100%;height:100%;
+               border:none;border-radius:14px"
       ></iframe>
     `;
     if (textEl) {
@@ -192,6 +237,7 @@ function selectQuestion(q) {
   showScreen('screen-video');
 }
 
+// ── Адмін логін ────────────────────────────
 function showAdminLogin() {
   showScreen('screen-admin-login');
 }
@@ -208,6 +254,7 @@ function checkAdminPassword() {
   }
 }
 
+// ── Адмін панель ───────────────────────────
 function renderAdminPanel() {
   const emptyList = document.getElementById('admin-empty-questions');
   if (!emptyList) return;
@@ -219,26 +266,27 @@ function renderAdminPanel() {
 
   if (empty.length === 0) {
     emptyList.innerHTML = `
-      <p style="color:#39ff14">✅ Всі питання мають відео!</p>
+      <p style="color:#39ff14">
+        ✅ Всі питання мають відео!
+      </p>
     `;
-    return;
+  } else {
+    empty.forEach(q => {
+      const cat = CATEGORIES.find(c => c.id === q.categoryId);
+      const div = document.createElement('div');
+      div.className = 'admin-question-item';
+      div.innerHTML = `
+        <div class="admin-question-text">
+          ${cat ? cat.emoji : ''} ${q.question}
+        </div>
+        <button class="btn-add-video" 
+          onclick="addVideoToQuestion(${q.id})">
+          + Відео
+        </button>
+      `;
+      emptyList.appendChild(div);
+    });
   }
-
-  empty.forEach(q => {
-    const cat = CATEGORIES.find(c => c.id === q.categoryId);
-    const div = document.createElement('div');
-    div.className = 'admin-question-item';
-    div.innerHTML = `
-      <div class="admin-question-text">
-        ${cat ? cat.emoji : ''} ${q.question}
-      </div>
-      <button class="btn-add-video" 
-        onclick="addVideoToQuestion(${q.id})">
-        + Відео
-      </button>
-    `;
-    emptyList.appendChild(div);
-  });
 
   const select = document.getElementById('new-question-category');
   if (select) {
@@ -252,9 +300,12 @@ function renderAdminPanel() {
   }
 }
 
+// ── Додати відео ───────────────────────────
 function addVideoToQuestion(questionId) {
   const url = prompt(
-    'Встав посилання для цього питання:'
+    'Встав посилання для цього питання:\n' +
+    'YouTube: https://www.youtube.com/embed/VIDEO_ID\n' +
+    'Drive: https://drive.google.com/file/d/ID/preview'
   );
   if (!url) return;
 
@@ -264,11 +315,13 @@ function addVideoToQuestion(questionId) {
   const q = QUESTIONS.find(q => q.id === questionId);
   if (q) {
     q.videos[parseInt(level)] = url;
-    alert('✅ Відео додано!');
+    saveToStorage();
+    alert('✅ Відео додано і збережено!');
     renderAdminPanel();
   }
 }
 
+// ── Додати питання ─────────────────────────
 function addQuestion() {
   const text = document.getElementById('new-question-text').value.trim();
   const categoryId = parseInt(
@@ -282,7 +335,8 @@ function addQuestion() {
   }
 
   const newId = Math.max(...QUESTIONS.map(q => q.id)) + 1;
-  QUESTIONS.push({
+
+  const newQuestion = {
     id: newId,
     categoryId,
     gender,
@@ -290,13 +344,18 @@ function addQuestion() {
     question: text,
     videos: {},
     text: '',
-  });
+  };
+
+  QUESTIONS.push(newQuestion);
+  saveToStorage();
 
   document.getElementById('new-question-text').value = '';
-  alert(`✅ Питання додано!\n"${text}"`);
+  alert(`✅ Питання додано і збережено!\n"${text}"`);
   renderAdminPanel();
 }
 
+// ── Ініціалізація ──────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  loadFromStorage();
   renderProfiles();
 });
