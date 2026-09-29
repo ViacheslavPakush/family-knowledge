@@ -52,17 +52,26 @@
     </div>
   </div>
 
-  <!-- ========== ЕКРАН ВІДЕО ========== -->
-  <div id="screen-video" class="screen">
-    <div class="top-bar">
-      <button class="btn-back" onclick="showScreen('screen-questions')">←</button>
-      <h2 id="video-title">Відповідь</h2>
-    </div>
-    <div class="video-wrapper">
-      <div id="video-container"></div>
-      <p id="video-text" class="video-text"></p>
-    </div>
+ <!-- ========== ЕКРАН ВІДЕО ========== -->
+<div id="screen-video" class="screen" 
+  style="height:100vh; overflow:hidden;">
+  <div class="top-bar">
+    <button class="btn-back" 
+      onclick="showScreen('screen-questions')">←</button>
+    <h2 id="video-title">Відповідь</h2>
   </div>
+  <div class="video-wrapper" 
+    style="height:calc(100vh - 60px);">
+    <div id="video-container" 
+      style="width:100%; 
+             height:100%; 
+             position:relative; 
+             background:#000;">
+    </div>
+    <p id="video-text" class="video-text" 
+      style="display:none;"></p>
+  </div>
+</div>
 
   <!-- ========== АДМІН ЛОГІН ========== -->
   <div id="screen-admin-login" class="screen">
