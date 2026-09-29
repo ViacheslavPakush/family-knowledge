@@ -327,16 +327,18 @@ html, body {
 .video-wrapper {
   padding: 0;
   width: 100%;
+  height: calc(100dvh - 60px);
   display: flex;
   flex-direction: column;
 }
 
 .video-container {
   width: 100%;
-  height: calc(100vh - 60px);
+  height: 100%;
   position: relative;
   background: #000;
   overflow: hidden;
+  flex: 1;
 }
 
 .video-container iframe {
