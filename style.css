@@ -325,7 +325,7 @@ html, body {
    ВІДЕО ЕКРАН
    ============================================ */
 .video-wrapper {
-  padding: 0;
+  padding: 100;
   width: 100%;
   height: calc(100vh - 60px);
   display: flex;
